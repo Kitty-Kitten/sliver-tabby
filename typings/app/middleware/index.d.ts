@@ -2,10 +2,10 @@
 // Do not modify this file!!!!!!!!!
 
 import 'egg';
-import ExportUsers from '../../../app/controller/users';
+import ExportResponse from '../../../app/middleware/response';
 
 declare module 'egg' {
-  interface IController {
-    users: ExportUsers;
+  interface IMiddleware {
+    response: typeof ExportResponse;
   }
 }
