@@ -8,7 +8,13 @@ export default (appInfo: EggAppInfo) => {
   config.keys = appInfo.name + '_1602413044811_8766';
 
   // add your egg config in here
-  config.middleware = [];
+  config.middleware = ['response'];
+
+  config.security = {
+    csrf: {
+      enable: false,
+    },
+  };
 
   // add your special config in here
   const bizConfig = {
