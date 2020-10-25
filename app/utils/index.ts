@@ -1,35 +1,5 @@
-import { Context } from 'egg';
-import { BASE_HTTP_CODE, ERROR_HTTP_CODE } from '../../model/code';
 import { camelToUnderline } from './caseTransformer';
 import { DEFAULT_INIT_PAGE, DEFAULT_PAGE_SIZE } from './constant';
-
-/**
- * validate query/params of request
- * @param ctx - Context
- * @param rule - any
- * @param data - any
- * @return {Boolean} - isValid
- */
-export const validateRequest = (
-  ctx: Context,
-  rule: any,
-  data?: any,
-): boolean => {
-  let isValid = false;
-
-  try {
-    ctx.validate(rule, data);
-    isValid = true;
-  } catch (error) {
-    ctx.logger.error(error);
-    ctx.sendErrorResponse(
-      BASE_HTTP_CODE.PARAM_ERROR,
-      ERROR_HTTP_CODE.PARAM_INVALID,
-    );
-  }
-
-  return isValid;
-};
 
 /**
  * extract and transform paging info

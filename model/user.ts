@@ -19,3 +19,10 @@ export interface IUserListResponse {
   list: IUserListRespData[];
   total: number;
 }
+
+export interface ICreateUserData {
+  name: string;
+  password: string;
+  avatar?: string;
+  status?: IUserStatus;
+}

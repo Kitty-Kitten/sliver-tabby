@@ -1,6 +1,10 @@
 import { Service } from 'egg';
 import { IBasePaging } from '../../model/base';
-import { IUserListQuery, IUserListResponse } from '../../model/user';
+import {
+  ICreateUserData,
+  IUserListQuery,
+  IUserListResponse,
+} from '../../model/user';
 
 /**
  * Users Service
@@ -9,7 +13,7 @@ export default class Users extends Service {
   /**
    * query user list
    */
-  public async list(
+  public async getUserList(
     query: IUserListQuery & IBasePaging,
   ): Promise<IUserListResponse> {
     const { mysql } = this.app;
@@ -37,5 +41,18 @@ export default class Users extends Service {
       list: result,
       total: total[0]['COUNT(id)'],
     };
+  }
+
+  public async createUser(data: ICreateUserData) {
+    const { mysql } = this.app;
+    const currentTime = +new Date();
+
+    const result = await mysql.insert('users', {
+      ...data,
+      create_time: currentTime,
+      update_time: currentTime,
+    });
+
+    return result.insertId;
   }
 }
