@@ -1,7 +1,8 @@
 import { Service } from 'egg';
 import { IBasePaging } from '../../model/base';
 import {
-  ICreateUserData,
+  ICreateUserRequest,
+  IQueryUserRequest,
   IUserListQuery,
   IUserListResponse,
 } from '../../model/user';
@@ -10,6 +11,7 @@ import {
  * Users Service
  */
 export default class Users extends Service {
+  private tableName = 'users';
   /**
    * query user list
    */
@@ -27,7 +29,7 @@ export default class Users extends Service {
       .join(' AND ');
     const where = conditionWhere ? `WHERE ${conditionWhere}` : '';
     const sql = `
-        select id, name, avatar, create_time, update_time, status from users ${where} ORDER BY create_time DESC LIMIT ${limit} OFFSET ${offset}
+        select id, name, avatar, create_time, update_time, status from ${this.tableName} ${where} ORDER BY create_time DESC LIMIT ${limit} OFFSET ${offset}
       `;
     this.ctx.logger.info(sql);
 
@@ -43,16 +45,32 @@ export default class Users extends Service {
     };
   }
 
-  public async createUser(data: ICreateUserData) {
+  public async createUser(data: ICreateUserRequest) {
     const { mysql } = this.app;
     const currentTime = +new Date();
 
-    const result = await mysql.insert('users', {
+    const result = await mysql.insert(this.tableName, {
       ...data,
       create_time: currentTime,
       update_time: currentTime,
     });
 
     return result.insertId;
+  }
+
+  public async getUser(query: IQueryUserRequest) {
+    const { mysql } = this.app;
+    const result = await mysql.get(this.tableName, query);
+
+    return result;
+  }
+
+  public async getUserByCondition(condition: any) {
+    const { mysql } = this.app;
+    const result = await mysql.select(this.tableName, {
+      where: condition,
+    });
+
+    return result;
   }
 }

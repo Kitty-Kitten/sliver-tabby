@@ -8,3 +8,11 @@ export const createUserRule = {
     type: 'string',
   },
 };
+
+export const getUserRule = {
+  id: {
+    required: true,
+    type: 'int',
+    convertType: 'int',
+  },
+};

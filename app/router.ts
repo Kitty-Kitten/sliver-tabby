@@ -7,5 +7,7 @@ export default (app: Application) => {
   } = app;
 
   router.get('/list', userController.getUserList);
+  router.get('/user', userController.getUser);
+
   router.post('/user', userController.createUser);
 };
