@@ -18,22 +18,22 @@ const sendSuccessResponse = function (this: Context, body: any) {
 
 const sendErrorResponse = function (
   this: Context,
-  error: IBaseError | BASE_HTTP_CODE,
-  errorCode?: ERROR_HTTP_CODE,
+  errorInfo: IBaseError | BASE_HTTP_CODE,
+  statusCode?: ERROR_HTTP_CODE,
 ) {
-  let code = error;
+  let code = errorInfo;
   let message = '';
 
-  if (typeof error === 'number') {
+  if (typeof errorInfo === 'number') {
     message = HTTP_CODE_MSG[code as BASE_HTTP_CODE];
   } else {
-    code = error.code;
-    message = error.message;
+    code = errorInfo.code;
+    message = errorInfo.message;
   }
 
-  this.status = code as BASE_HTTP_CODE;
+  this.status = (statusCode || code) as BASE_HTTP_CODE;
   this.body = {
-    code: errorCode || BASE_HTTP_CODE.UNKNOWN,
+    code: code || BASE_HTTP_CODE.UNKNOWN,
     message,
   };
 };

@@ -9,6 +9,7 @@ export enum BASE_HTTP_CODE {
 
 export enum ERROR_HTTP_CODE {
   PARAM_INVALID = 40000,
+  DUPLICATE_VALUE = 400001,
 }
 
 export const HTTP_CODE_MSG = {
@@ -19,4 +20,12 @@ export const HTTP_CODE_MSG = {
   [BASE_HTTP_CODE.AUTH_FAILURE]: '身份校验错误',
   [BASE_HTTP_CODE.NO_PERMISSION]: '权限错误',
   [ERROR_HTTP_CODE.PARAM_INVALID]: '参数错误',
+  [ERROR_HTTP_CODE.DUPLICATE_VALUE]: '字段值重复',
 } as Record<BASE_HTTP_CODE, string>;
+
+export const EXCEPTION_MAP = {
+  DUPLICATE_VALUE: {
+    code: ERROR_HTTP_CODE.DUPLICATE_VALUE,
+    message: HTTP_CODE_MSG[ERROR_HTTP_CODE.DUPLICATE_VALUE],
+  },
+};

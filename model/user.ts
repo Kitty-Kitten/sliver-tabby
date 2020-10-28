@@ -20,9 +20,13 @@ export interface IUserListResponse {
   total: number;
 }
 
-export interface ICreateUserData {
+export interface ICreateUserRequest {
   name: string;
   password: string;
   avatar?: string;
   status?: IUserStatus;
+}
+
+export interface IQueryUserRequest {
+  id: number;
 }

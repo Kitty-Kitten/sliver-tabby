@@ -15,8 +15,8 @@ const validateRequest = function (
   } catch (error) {
     ctx.logger.error(error);
     ctx.sendErrorResponse(
-      BASE_HTTP_CODE.PARAM_ERROR,
       ERROR_HTTP_CODE.PARAM_INVALID,
+      BASE_HTTP_CODE.PARAM_ERROR,
     );
   }
 
