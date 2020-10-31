@@ -21,3 +21,4 @@ config/**/*.map
 .github
 db.ts
 todo.md
+settings.ts

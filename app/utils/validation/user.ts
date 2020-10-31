@@ -6,6 +6,9 @@ export const createUserRule = {
   password: {
     required: true,
     type: 'string',
+    min: 6,
+    trim: true,
+    format: /^[a-zA-Z].{5,32}/,
   },
 };
 

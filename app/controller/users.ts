@@ -1,9 +1,11 @@
+import { AES } from 'crypto-js';
 import { Controller } from 'egg';
 import { IBasePaging } from '../../model/base';
 import { BASE_HTTP_CODE, EXCEPTION_MAP } from '../../model/code';
 import { IUserListQuery } from '../../model/user';
 import { processQuery, transformPagingInfo } from '../utils';
 import { createUserRule, getUserRule } from '../utils/validation/user';
+import { passwordSalt } from '../../settings';
 
 export default class HomeController extends Controller {
   public async getUserList() {
@@ -37,6 +39,8 @@ export default class HomeController extends Controller {
       );
       return;
     }
+
+    body.password = AES.encrypt(body.password, passwordSalt).toString();
 
     const response = await ctx.service.users.createUser(body);
 
