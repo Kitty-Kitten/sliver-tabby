@@ -27,6 +27,11 @@ export interface ICreateUserRequest {
   status?: IUserStatus;
 }
 
-export interface IQueryUserRequest {
+export interface IUserBaseRequest {
   id: number;
+}
+
+export interface IUserEditRequest extends IUserBaseRequest {
+  createTime?: number;
+  updateTime?: number;
 }

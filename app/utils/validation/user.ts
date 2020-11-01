@@ -12,7 +12,7 @@ export const createUserRule = {
   },
 };
 
-export const getUserRule = {
+export const userBaseRule = {
   id: {
     required: true,
     type: 'int',
