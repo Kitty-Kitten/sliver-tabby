@@ -4,14 +4,14 @@ export enum IUserStatus {
   DELETED,
 }
 
-export interface IUserListQuery {
+export interface IUserReadFields {
   name?: string;
   createTime?: number;
   updateTime?: number;
   status?: IUserStatus;
 }
 
-export interface IUserListRespData extends Required<IUserListQuery> {
+export interface IUserListRespData extends Required<IUserReadFields> {
   avatar: string;
 }
 
@@ -31,7 +31,7 @@ export interface IUserBaseRequest {
   id: number;
 }
 
-export interface IUserEditRequest extends IUserBaseRequest {
-  createTime?: number;
-  updateTime?: number;
+export interface IUserEditRequest extends IUserBaseRequest, IUserReadFields {
+  password?: string;
+  avatar?: string;
 }
