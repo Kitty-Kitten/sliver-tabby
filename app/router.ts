@@ -10,4 +10,6 @@ export default (app: Application) => {
   router.get('/user', userController.getUser);
 
   router.post('/user', userController.createUser);
+
+  router.put('/user', userController.editUser);
 };

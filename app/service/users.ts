@@ -2,10 +2,12 @@ import { Service } from 'egg';
 import { IBasePaging } from '../../model/base';
 import {
   ICreateUserRequest,
-  IQueryUserRequest,
+  IUserBaseRequest,
+  IUserEditRequest,
   IUserListQuery,
   IUserListResponse,
 } from '../../model/user';
+import { processQuery } from '../utils';
 
 /**
  * Users Service
@@ -58,7 +60,7 @@ export default class Users extends Service {
     return result.insertId;
   }
 
-  public async getUser(query: IQueryUserRequest) {
+  public async getUser(query: IUserBaseRequest) {
     const { mysql } = this.app;
     const result = await mysql.get(this.tableName, query);
 
@@ -72,5 +74,17 @@ export default class Users extends Service {
     });
 
     return result;
+  }
+
+  public async editUser(data: IUserEditRequest) {
+    const { mysql } = this.app;
+    const newData = JSON.parse(JSON.stringify(data));
+
+    delete newData.createTime;
+    newData.updateTime = mysql.literals.now;
+
+    await mysql.update(this.tableName, processQuery(newData));
+
+    return { id: newData.id };
   }
 }
