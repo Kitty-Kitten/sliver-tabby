@@ -2,7 +2,7 @@ import { AES } from 'crypto-js';
 import { Controller } from 'egg';
 import { IBasePaging } from '../../model/base';
 import { BASE_HTTP_CODE, EXCEPTION_MAP } from '../../model/code';
-import { IUserListQuery } from '../../model/user';
+import { IUserReadFields, IUserStatus } from '../../model/user';
 import { processQuery, transformPagingInfo } from '../utils';
 import { createUserRule, userBaseRule } from '../utils/validation/user';
 import { passwordSalt } from '../../settings';
@@ -28,7 +28,7 @@ export default class HomeController extends Controller {
 
     const transformedQuery = transformPagingInfo(query);
     const response = await ctx.service.users.getUserList(
-      processQuery(transformedQuery) as IUserListQuery & IBasePaging,
+      processQuery(transformedQuery) as IUserReadFields & IBasePaging,
     );
 
     ctx.sendSuccessResponse(response);
@@ -88,6 +88,20 @@ export default class HomeController extends Controller {
       ...(body.password
         ? { password: this.encryptPassword(body.password) }
         : {}),
+    });
+
+    ctx.sendSuccessResponse(response);
+  }
+
+  public async deleteUser() {
+    const { ctx } = this;
+    const { body } = ctx.request;
+
+    if (!ctx.helper.validateRequest(userBaseRule, body)) return;
+
+    const response = await ctx.service.users.editUser({
+      id: body.id,
+      status: IUserStatus.DELETED,
     });
 
     ctx.sendSuccessResponse(response);

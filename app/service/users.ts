@@ -4,7 +4,7 @@ import {
   ICreateUserRequest,
   IUserBaseRequest,
   IUserEditRequest,
-  IUserListQuery,
+  IUserReadFields,
   IUserListResponse,
 } from '../../model/user';
 import { processQuery } from '../utils';
@@ -18,7 +18,7 @@ export default class Users extends Service {
    * query user list
    */
   public async getUserList(
-    query: IUserListQuery & IBasePaging,
+    query: IUserReadFields & IBasePaging,
   ): Promise<IUserListResponse> {
     const { mysql } = this.app;
     const { limit, offset, name, ...res } = query;

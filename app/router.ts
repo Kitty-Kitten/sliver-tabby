@@ -12,4 +12,6 @@ export default (app: Application) => {
   router.post('/user', userController.createUser);
 
   router.put('/user', userController.editUser);
+
+  router.delete('/user', userController.deleteUser);
 };
